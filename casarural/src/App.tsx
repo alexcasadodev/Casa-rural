@@ -1,34 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react"
+import Habitaciones from "./Components/Habitaciones";
+import Inicio from "./Components/Inicio";
+import Entorno from "./Components/Entorno";
+import Casa from "./Components/Casa";
+import Contacto from "./Components/Contacto";
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [tab, setTab] = useState("Inicio");
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="w-screen min-h-screen flex flex-col bg-gray-100">
+      <div className="h-16 w-full bg-amber-600 flex items-center justify-end gap-8 pr-32">
+        {/* Barra de arriba para elegir entra pestañas */}
+        <div
+          className={`text-xl font-semibold text-black cursor-pointer ${tab === "Inicio" ? "" : " hover:text-gray-500 "}`}
+          onClick={()=> {
+            setTab("Inicio")
+          }}
+        >
+          Inicio
+        </div>
+        <div
+          className={`text-xl font-semibold text-black cursor-pointer ${tab === "Habitaciones" ? "" : " hover:text-gray-500 "}`}
+          onClick={()=> {
+            setTab("Habitaciones")
+          }}
+        >
+          Habitaciones
+        </div>
+        <div
+          className={`text-xl font-semibold text-black cursor-pointer ${tab === "Entorno" ? "" : " hover:text-gray-500 "}`}
+          onClick={()=> {
+            setTab("Entorno")
+          }}
+        >
+          Entorno
+        </div>
+        <div
+          className={`text-xl font-semibold text-black cursor-pointer ${tab === "Casa" ? "" : " hover:text-gray-500 "}`}
+          onClick={()=> {
+            setTab("Casa")
+          }}
+        >
+          Casa
+        </div>
+        <div
+          className={`text-xl font-semibold text-black cursor-pointer ${tab === "Contacto" ? "" : " hover:text-gray-500 "}`}
+          onClick={()=> {
+            setTab("Contacto")
+          }}
+        >
+          Contacto
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      {tab === "Inicio" ? (
+        <Inicio />
+      ) : tab === "Habitaciones" ? (
+        <Habitaciones />
+      ) : tab === "Entorno" ? (
+        <Entorno />
+      ) : tab === "Casa" ? (
+        <Casa />
+      ) : tab === "Contacto" ? (
+        <Contacto />
+      ) : null}
+    </div>
   )
 }
 
