@@ -1,70 +1,50 @@
 import { useState } from "react"
-import Habitaciones from "./Components/Habitaciones";
-import Inicio from "./Components/Inicio";
-import Entorno from "./Components/Entorno";
-import Casa from "./Components/Casa";
-import Contacto from "./Components/Contacto";
+import Habitaciones from "./Components/Habitaciones"
+import Inicio from "./Components/Inicio"
+import Entorno from "./Components/Entorno"
+import Casa from "./Components/Casa"
+import Contacto from "./Components/Contacto"
+
+const TABS = ["Inicio", "Habitaciones", "Entorno", "Casa", "Contacto"] as const
+type Tab = typeof TABS[number]
 
 function App() {
-
-  const [tab, setTab] = useState("Inicio");
+  const [tab, setTab] = useState<Tab>("Inicio")
 
   return (
-    <div className="w-screen min-h-screen flex flex-col bg-gray-100">
-      <div className="h-16 w-full bg-amber-600 flex items-center justify-end gap-8 pr-32">
-        {/* Barra de arriba para elegir entra pestañas */}
-        <div
-          className={`text-xl font-semibold text-black cursor-pointer ${tab === "Inicio" ? "" : " hover:text-gray-500 "}`}
-          onClick={()=> {
-            setTab("Inicio")
-          }}
-        >
-          Inicio
+    <div className="w-screen min-h-screen flex flex-col bg-stone-50">
+      {/* Navbar */}
+      <nav className="h-16 w-full bg-stone-900 flex items-center justify-between px-12 sticky top-0 z-50">
+        <span className="font-serif italic text-amber-400 text-lg tracking-wide">
+          Casa Rural · Prádena
+        </span>
+        <div className="flex items-center gap-8">
+          {TABS.map(t => (
+            <div
+              key={t}
+              onClick={() => setTab(t)}
+              className={`
+                text-sm tracking-widest uppercase font-light transition-colors duration-200 pb-0.5
+                ${tab === t
+                  ? "text-amber-400 border-b border-amber-400"
+                  : "text-stone-400 hover:text-stone-200 cursor-pointer border-b border-transparent"
+                }
+              `}
+            >
+              {t}
+            </div>
+          ))}
         </div>
-        <div
-          className={`text-xl font-semibold text-black cursor-pointer ${tab === "Habitaciones" ? "" : " hover:text-gray-500 "}`}
-          onClick={()=> {
-            setTab("Habitaciones")
-          }}
-        >
-          Habitaciones
-        </div>
-        <div
-          className={`text-xl font-semibold text-black cursor-pointer ${tab === "Entorno" ? "" : " hover:text-gray-500 "}`}
-          onClick={()=> {
-            setTab("Entorno")
-          }}
-        >
-          Entorno
-        </div>
-        <div
-          className={`text-xl font-semibold text-black cursor-pointer ${tab === "Casa" ? "" : " hover:text-gray-500 "}`}
-          onClick={()=> {
-            setTab("Casa")
-          }}
-        >
-          Casa
-        </div>
-        <div
-          className={`text-xl font-semibold text-black cursor-pointer ${tab === "Contacto" ? "" : " hover:text-gray-500 "}`}
-          onClick={()=> {
-            setTab("Contacto")
-          }}
-        >
-          Contacto
-        </div>
-      </div>
-      {tab === "Inicio" ? (
-        <Inicio />
-      ) : tab === "Habitaciones" ? (
-        <Habitaciones />
-      ) : tab === "Entorno" ? (
-        <Entorno />
-      ) : tab === "Casa" ? (
-        <Casa />
-      ) : tab === "Contacto" ? (
-        <Contacto />
-      ) : null}
+      </nav>
+
+      {/* Contenido */}
+      <main className="flex-1">
+        {tab === "Inicio"       && <Inicio setTab={setTab} />}
+        {tab === "Habitaciones" && <Habitaciones />}
+        {tab === "Entorno"      && <Entorno />}
+        {tab === "Casa"         && <Casa />}
+        {tab === "Contacto"     && <Contacto />}
+      </main>
     </div>
   )
 }
